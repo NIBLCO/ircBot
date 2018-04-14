@@ -78,7 +78,7 @@ public class Bot {
         cb.setLogin( this.getProperty("login") );
         cb.setAutoReconnect( true );
         cb.setNickservPassword( this.getProperty("bot_pass") ); // TODO test if this works
-        
+        cb.setAutoReconnect(true);
         // Set server information
         cb.addServer(this.getProperty("server"), Integer.parseInt(this.getProperty("port")));
         cb.setSocketFactory( new UtilSSLSocketFactory().trustAllCertificates() );
