@@ -1,0 +1,68 @@
+<project name="MyBot" default="jar" basedir=".">
+	<description>
+        builds my irc bot
+    </description>
+	<!-- set global properties for this build -->
+	<property name="src" location="src" />
+	<property name="test" location="test" />
+	<property name="lib" value="lib" />
+	<property name="bin" location="bin" />
+	<property name="build" location="build" />
+
+	<property name="main-class" value="ircbot.Bot" />
+
+	<path id="classpath">
+		<fileset dir="${lib}" includes="**/*.jar" />
+	</path>
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${bin}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the source ">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac destdir="${bin}" includeantruntime="false">
+			<src path="${src}" />
+			<src path="${test}" />
+			<classpath refid="classpath" />
+		</javac>
+
+	</target>
+
+	<path id="classpath.test">
+		<pathelement location="${bin}" />
+		<path refid="classpath" />
+	</path>
+
+	<target name="test" depends="compile" description="Execute Unit Tests">
+		<junit printsummary="yes" fork="no" haltonfailure="yes">
+			<classpath refid="classpath.test" />
+			<formatter type="plain" usefile="false" />
+			<test name="UpdatePackListTest" />
+		</junit>
+	</target>
+
+	<target name="jar" depends="compile" description="generate the distribution">
+		<jar destfile="${build}/${ant.project.name}.jar" basedir="${bin}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Class-Path" value="../${lib}/mysql-connector-java-5.1.17-bin.jar ../${lib}/pircbotx-2.1-20150921.164219-143.jar" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="compile,test" description="run">
+		<java classname="ircbot.Bot" classpath="${bin}" classpathref="classpath" fork="true">
+			<arg value="config/config.txt" />
+		</java>
+	</target>
+
+	<target name="clean" description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${bin}" />
+	</target>
+</project>
+

@@ -1,0 +1,86 @@
+###IRC###
+#name of the bot
+bot_name = ircBot
+#pass word for the name
+bot_pass = password
+#servers to join space seperated
+server = irc.rizon.net
+#port
+port = 9999
+#ssl true/false (make sure port is good)
+ssl = true
+#channels to join no # space separated :passwords
+channels = ooinuza
+admin_channel = ooinuza
+#name before the @
+login = bot
+#0 trace, 1 normal, 2 error
+loglevel = 0
+#download directory
+download_dir = botlists/
+#dcc_timeout
+dcc_timeout = 120000
+#prints messages to standard output true/false
+verbose = false
+#changes nick if already used
+auto_nick_change = true
+###BOT###
+# pass used to log in bot with dcc chat (admin)
+bot_auth = niblempire
+# accept dcc chat requests. usually you want false but my fucking port is blocked
+bot_dcc_chat_accept = false
+# number of request to handle at the same time
+bot_conc_request = 10
+# number of admins that can be logged on at the same time
+bot_conc_admin = 3
+# hentaiverse base equip stats settings
+player_level = 401
+hentaiverse_update_time = 5
+hentaiverse_delay = 200
+###Commands### getName() = enabled/disabled (only need the string returned by getName())
+tt = disabled
+anidb = disabled
+help = enabled
+request = enabled
+money = enabled
+search = enabled
+latest = enabled
+nibl++ = enabled
+sendme = disabled
+rules = enabled
+dildo = enabled
+###Services### getName()  start/stop
+packlist = start
+hentaiverse = start
+update_pack_list_time = 1800
+connection = start
+reconnect_check_time = 60
+check_name_registered = start
+topic_manager = start
+anidb_keep_alive = start
+anidb_link = http://dev.nibl.co.uk/animetitles.xml.gz
+#anidb_link = http://anidb.net/api/animetitles.xml.gz
+scheduler = start
+sendmeservice = stop
+twitter = stop
+twitter_update_time = 60
+newestepisode = start
+newestepisode_update_time = 60
+hv_lotto = start
+hv_lottery_time = 7200
+hv_lottery_channel = e-hentai
+hv_monster = stop
+hv_monster_time = 3600
+### Database stuff ###
+# what database used mysql postgresql...
+db = mysql
+# user for database
+db_user = root
+# password for database
+db_pass = password
+# server
+db_server = localhost
+# port
+db_port = 3306
+# name of database
+db_name = ooinuza

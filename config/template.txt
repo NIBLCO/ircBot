@@ -1,0 +1,48 @@
+###IRC###
+#name of the bot
+bot_name =
+#pass word for the name
+bot_pass =
+#server
+server =
+#port
+port =
+#channels to join no # space separated :passwords
+channels =
+admin_channel = 
+#name before the @
+login =
+#download directory
+download_dir =
+#dcc_timeout
+dcc_timeout =
+#prints messages to standard output true/false
+verbose =
+#changes nick if already used
+auto_nick_change =
+###BOT###
+# pass used to log in bot with dcc chat (admin)
+bot_auth =
+# accept dcc chat requests. usually you want false but my fucking port is blocked
+bot_dcc_chat_accept =
+# number of request to handle at the same time
+bot_conc_request =
+# number of admins that can be logged on at the same time
+bot_conc_admin =
+###Services### getName()  start/stop
+update_pack_list =
+check_name_registered =
+### Database stuff ###
+# what database used mysql postgresql...
+db =
+# user for database
+db_user =
+# password for database
+db_pass =
+# server
+db_server =
+# port
+db_port =
+# name of database
+db_name =
+###Commands### The getName()  enabled/disabled

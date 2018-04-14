@@ -1,0 +1,2 @@
+Main-Class: com.nibl.bot.Bot
+Class-Path: ./lib/
