@@ -28,7 +28,7 @@ public class PackParseFunctions extends BotExtend {
 		}
 		public SizeMult getSizeMultByText(String text){
 			for( SizeMult sizeMult : SizeMult.values() ) {
-				if( sizeMult.text.toLowerCase().equals(text) ){
+				if( sizeMult.text.toLowerCase().equals(text.toLowerCase()) ){
 					return sizeMult;
 				}
 			}
@@ -77,11 +77,12 @@ public class PackParseFunctions extends BotExtend {
 		
 		Long sizeKBits = 0L;
 		try{
+			packsize = packsize.trim();
 			String sizeDesc = packsize.substring(packsize.length() -1 , packsize.length());
 			SizeMult sizeMult = SizeMult.SIZE_NULL.getSizeMultByText(sizeDesc);
 			sizeKBits = Long.parseLong(packsize.replace(sizeDesc, ""))*sizeMult.mul;
 		}catch(Exception e) {
-			_myBot.getLogger().warn("Failed to calculate size with " + packsize);
+			_myBot.getLogger().warn("Failed to calculate size with " + packsize + "; " + e.getMessage());
 		}
 		
 		return new Pack(bot.getId(), packnumber, bot.getName(), packname, packsize, sizeKBits, -1, new Timestamp(System.currentTimeMillis()));
