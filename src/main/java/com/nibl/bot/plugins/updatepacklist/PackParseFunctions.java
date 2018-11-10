@@ -12,6 +12,30 @@ import com.nibl.bot.plugins.search.SearchDAO;
 
 public class PackParseFunctions extends BotExtend {
 	
+	public enum SizeMult {
+		SIZE_NULL("",0L),
+		SIZE_KB("K",1L),
+		SIZE_MB("M",1024^2L),
+		SIZE_GB("G",1024^3L),
+		SIZE_TB("T",1024^4L),
+		SIZE_PB("P",1024^5L);
+	    
+		String text;
+		Long mul;
+		SizeMult(String text, Long mul) {
+			this.text = text;
+			this.mul = mul;
+		}
+		public SizeMult getSizeMultByText(String text){
+			for( SizeMult sizeMult : SizeMult.values() ) {
+				if( sizeMult.text.toLowerCase().equals(text) ){
+					return sizeMult;
+				}
+			}
+			return SizeMult.SIZE_NULL;
+		}
+	};
+	
 	public enum Parser {
 		PARSER_NULL(0,null),
 		PARSER_NORMAL(PARSER_NORMAL_ID, new ParserNormal()), 
@@ -48,10 +72,19 @@ public class PackParseFunctions extends BotExtend {
 		_searchDAO = (SearchDAO) _myBot.getDAOFactory().getDAO("SearchDAO");
 	}
 	
-	public static Pack buildPack(AbstractDistroBot bot, int packnumber, String packname, String packsize)
+	public Pack buildPack(AbstractDistroBot bot, int packnumber, String packname, String packsize)
 	{
-		//packname.replaceAll("", "")
-		return new Pack(bot.getId(), packnumber, bot.getName(), packname, packsize, -1, new Timestamp(System.currentTimeMillis()));
+		
+		Long sizeKBits = 0L;
+		try{
+			String sizeDesc = packsize.substring(packsize.length() -1 , packsize.length());
+			SizeMult sizeMult = SizeMult.SIZE_NULL.getSizeMultByText(sizeDesc);
+			sizeKBits = Long.parseLong(packsize.replace(sizeDesc, ""))*sizeMult.mul;
+		}catch(Exception e) {
+			_myBot.getLogger().warn("Failed to calculate size with " + packsize);
+		}
+		
+		return new Pack(bot.getId(), packnumber, bot.getName(), packname, packsize, sizeKBits, -1, new Timestamp(System.currentTimeMillis()));
 	}
 	
 	/*
@@ -112,7 +145,8 @@ public class PackParseFunctions extends BotExtend {
 			if ( null != comparePack && 
 				 comparePack.getName().equals( newData.get(i).getName() ) &&   
 				 comparePack.getNumber() == newData.get(i).getNumber() && 
-				 comparePack.getSize().equals( newData.get(i).getSize() )
+				 comparePack.getSize().equals( newData.get(i).getSize() ) &&
+				 comparePack.getSizeKBits().equals( newData.get(i).getSizeKBits() )
 				){
 				
 				newData.get(i).setLastModified( comparePack.getLastModified() );

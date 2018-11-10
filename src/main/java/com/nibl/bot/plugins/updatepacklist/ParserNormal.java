@@ -10,6 +10,8 @@ public class ParserNormal extends AbstractParser {
 	
 	public LinkedList<Pack> parse(AbstractDistroBot bot, RandomAccessFile in) throws Exception {
 		
+		PackParseFunctions packParseFunctions = new PackParseFunctions(bot.getPircBotX());
+		
 		LinkedList<Pack> output = new LinkedList<Pack>();
 		
 		if( null == bot || null == in ){
@@ -39,7 +41,7 @@ public class ParserNormal extends AbstractParser {
     
     					String name = line.substring(endIndex + 2);
     					
-    					Pack pack = PackParseFunctions.buildPack(bot, number, name, size);
+    					Pack pack = packParseFunctions.buildPack(bot, number, name, size);
     					output.add(pack);
     				}
     			}

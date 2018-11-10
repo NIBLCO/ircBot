@@ -156,7 +156,7 @@ public class UpdatePackListDAO extends DataAccessObject {
 
 				ResultSet rs = stmt.executeQuery("SELECT * FROM updatepacklist_packs WHERE bot_id = " + bot.getId());
 				while (rs.next()) {
-					listing.add( new Pack(rs.getInt("bot_id"), rs.getInt("number"), bot.getName(), rs.getString("name"), rs.getString("size"), rs.getInt("episode_number"), rs.getTimestamp("last_modified")) );
+					listing.add( new Pack(rs.getInt("bot_id"), rs.getInt("number"), bot.getName(), rs.getString("name"), rs.getString("size"), rs.getLong("sizekbits"), rs.getInt("episode_number"), rs.getTimestamp("last_modified")) );
 				}
 				rs.close();
 				stmt.close();

@@ -8,6 +8,8 @@ public class ParserDinoex extends AbstractParser {
 	@Override
 	public LinkedList<Pack> parse(AbstractDistroBot bot, RandomAccessFile in) throws Exception {
 		
+		PackParseFunctions packParseFunctions = new PackParseFunctions(bot.getPircBotX());
+		
 		LinkedList<Pack> output = new LinkedList<Pack>();
 		
 		if( null == bot || null == in ){
@@ -39,7 +41,7 @@ public class ParserDinoex extends AbstractParser {
 					items.append(text);
 				}
 				String name = removeBrackets(items.toString());
-				Pack pack = PackParseFunctions.buildPack(bot, Integer.parseInt(number.trim().replaceAll("#", "")), name, size);
+				Pack pack = packParseFunctions.buildPack(bot, Integer.parseInt(number.trim().replaceAll("#", "")), name, size);
 				output.add(pack);
 			} 
 			

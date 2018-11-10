@@ -9,15 +9,17 @@ public class Pack {
 	private int _number;
 	private String _name;
 	private String _size;
+	private Long _sizekbits;
 	private Timestamp _lastModified;
 	private String _botName;
 	private int _episodeNumber;
 	
-	public Pack(int bot_id, int packNumber, String botName, String packName, String packSize, int episodeNumber, Timestamp lastModified){
+	public Pack(int bot_id, int packNumber, String botName, String packName, String packSize, Long packSizeKBits, int episodeNumber, Timestamp lastModified){
 		_bot_id = bot_id;
 		_number = packNumber;
 		_name = packName;
 		_size = packSize;
+		_sizekbits = packSizeKBits;
 		_episodeNumber = episodeNumber;
 		_lastModified = lastModified;
 		_botName = botName;
@@ -47,6 +49,10 @@ public class Pack {
 		return _size;
 	}
 	
+	public Long getSizeKBits() {
+		return _sizekbits;
+	}
+
 	public int getEpisodeNumber(){
 		return _episodeNumber;
 	}

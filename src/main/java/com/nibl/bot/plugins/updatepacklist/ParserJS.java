@@ -13,6 +13,8 @@ public class ParserJS extends AbstractParser {
 	public LinkedList<Pack> parse(AbstractDistroBot bot, RandomAccessFile in) 
 			throws NumberFormatException, IOException{
 		
+		PackParseFunctions packParseFunctions = new PackParseFunctions(bot.getPircBotX());
+		
 		LinkedList<Pack> output = new LinkedList<Pack>();
 		
 		if( null == bot || null == in ){
@@ -29,7 +31,7 @@ public class ParserJS extends AbstractParser {
 
 			matcher = _pattern.matcher(line);
 			if( matcher.find() ) {
-				output.add( PackParseFunctions.buildPack(bot, Integer.parseInt(matcher.group(3)), matcher.group(6), matcher.group(5) + 'M') );
+				output.add( packParseFunctions.buildPack(bot, Integer.parseInt(matcher.group(3)), matcher.group(6), matcher.group(5) + 'M') );
 			}
 		}
 		
