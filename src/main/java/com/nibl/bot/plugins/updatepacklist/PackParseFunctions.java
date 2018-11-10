@@ -13,16 +13,16 @@ import com.nibl.bot.plugins.search.SearchDAO;
 public class PackParseFunctions extends BotExtend {
 	
 	public enum SizeMult {
-		SIZE_NULL("",0L),
-		SIZE_KB("K",1L),
-		SIZE_MB("M",1024^2L),
-		SIZE_GB("G",1024^3L),
-		SIZE_TB("T",1024^4L),
-		SIZE_PB("P",1024^5L);
+		SIZE_NULL("",0d),
+		SIZE_KB("K",1d),
+		SIZE_MB("M",Math.pow(1024, 2)),
+		SIZE_GB("G",Math.pow(1024, 3)),
+		SIZE_TB("T",Math.pow(1024, 4)),
+		SIZE_PB("P",Math.pow(1024, 5));
 	    
 		String text;
-		Long mul;
-		SizeMult(String text, Long mul) {
+		Double mul;
+		SizeMult(String text, Double mul) {
 			this.text = text;
 			this.mul = mul;
 		}
@@ -80,9 +80,9 @@ public class PackParseFunctions extends BotExtend {
 			packsize = packsize.trim();
 			String sizeDesc = packsize.substring(packsize.length() -1 , packsize.length());
 			SizeMult sizeMult = SizeMult.SIZE_NULL.getSizeMultByText(sizeDesc);
-			sizeKBits = Long.parseLong(packsize.replace(sizeDesc, ""))*sizeMult.mul;
+			sizeKBits = (long) (Double.parseDouble(packsize.replace(sizeDesc, "")) * sizeMult.mul);
 		}catch(Exception e) {
-			_myBot.getLogger().warn("Failed to calculate size with " + packsize + "; " + e.getMessage());
+			_myBot.getLogger().error("Failed to calculate size with " + packsize, e);
 		}
 		
 		return new Pack(bot.getId(), packnumber, bot.getName(), packname, packsize, sizeKBits, -1, new Timestamp(System.currentTimeMillis()));
