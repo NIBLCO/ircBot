@@ -276,11 +276,11 @@ public class UpdatePackListDAO extends DataAccessObject {
 		
 		int counter = 0;
 		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO " + _PACKS_TABLE + " (bot_id, number, name, size, episode_number, last_modified) VALUES ");
+		sb.append("INSERT INTO " + _PACKS_TABLE + " (bot_id, number, name, size, sizekbits, episode_number, last_modified) VALUES ");
 		
 		for(int i=0; i<listSize; i++) {
 			Pack pack = bot.getListing().get(i);
-			sb.append("(" + pack.getBotId() + "," + pack.getNumber() + ",'" + pack.getName().replaceAll("'", Matcher.quoteReplacement("\\'")) + "','" + pack.getSize() + "','" + pack.getEpisodeNumber() + "','" + pack.getLastModified() + "')");
+			sb.append("(" + pack.getBotId() + "," + pack.getNumber() + ",'" + pack.getName().replaceAll("'", Matcher.quoteReplacement("\\'")) + "','" + pack.getSize() + "','" + pack.getSizeKBits() + "','" + pack.getEpisodeNumber() + "','" + pack.getLastModified() + "')");
 			counter++;
 			
 			if(counter>1000){
@@ -292,7 +292,7 @@ public class UpdatePackListDAO extends DataAccessObject {
 					_myBot.getLogger().error(bot.getName() + " broke in insertAndUpdateListFor()", e);
 				}
 				sb = new StringBuilder();
-				sb.append("INSERT INTO " + _PACKS_TABLE + " (bot_id, number, name, size, episode_number, last_modified) VALUES ");
+				sb.append("INSERT INTO " + _PACKS_TABLE + " (bot_id, number, name, size, sizekbits, episode_number, last_modified) VALUES ");
 				counter = 0;
 			} else {
 				if (i != listSize - 1) {
