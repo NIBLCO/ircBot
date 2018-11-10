@@ -80,7 +80,7 @@ public class PackParseFunctions extends BotExtend {
 			packsize = packsize.trim();
 			String sizeDesc = packsize.substring(packsize.length() -1 , packsize.length());
 			SizeMult sizeMult = SizeMult.SIZE_NULL.getSizeMultByText(sizeDesc);
-			sizeKBits = (long) (Double.parseDouble(packsize.replace(sizeDesc, "")) * sizeMult.mul);
+			sizeKBits = (long) (Double.parseDouble(packsize.replace(sizeDesc, "").replaceAll("<", "")) * sizeMult.mul);
 		}catch(Exception e) {
 			_myBot.getLogger().error("Failed to calculate size with " + packsize, e);
 		}
