@@ -158,7 +158,14 @@ public class AdminSession extends BotExtend implements Runnable {
 	@Override
 	public void run() {
 		try {
+
+			if( null == _password ) {
+				_session.sendLine("What is your password?");
+				_password = _session.readLine();
+			}
+
 			if( !_adminDAO.authorizeUser(_user, _password) ){
+				_session.sendLine("Incorrect password");
 				return;
 			}
 			

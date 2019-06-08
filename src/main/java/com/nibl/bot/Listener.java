@@ -97,7 +97,19 @@ public class Listener extends ListenerAdapter {
 	
 	@Override
 	public void onIncomingChatRequest(IncomingChatRequestEvent event){
-		_myBot.sendMessageFair(event.getUser(), "I do not accept incoming dcc chat requests");
+		BotUser botUser = _myBot.getBotUsers().get(event.getUser().getNick().toLowerCase());
+		if ( botUser != null && botUser.getAccessLevel() > 0 ) {
+			if( event.getUser().isVerified() ){
+				try {
+					AdminSession adminSession = new AdminSession(_myBot, botUser, event.getUser(), null);
+					_myBot.getAdminExecutor().execute(adminSession);
+				} catch (Exception e) {
+					_myBot.sendMessageFair(event.getUser().getNick(), "Problem using DccChat session: " + e.getMessage());
+				}
+			} else {
+				_myBot.sendMessageFair(event.getUser().getNick(), "You don't seem to be registered with nickserv");
+			}
+		}
 	}
 	
 	/**
