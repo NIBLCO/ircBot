@@ -65,11 +65,11 @@ scheduler = start
 # what database used mysql postgresql...
 db = mysql
 # user for database
-db_user = x
+db_user = ooinuza
 # password for database
-db_pass = x
+db_pass = niblempire
 # server
-db_server = mysql
+db_server = niblmysql
 # port
 db_port = 3306
 # name of database
