@@ -1,11 +1,17 @@
 package com.nibl.bot;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import org.pircbotx.Channel;
 import org.pircbotx.Configuration;
@@ -67,6 +73,7 @@ public class Bot {
     }
 
     private Configuration createConfiguration() {
+
         Builder cb = new Configuration.Builder();
         cb.addListener(new Listener(this));
         // Set bot information
@@ -82,6 +89,18 @@ public class Bot {
         // Set server information
         cb.addServer(this.getProperty("server"), Integer.parseInt(this.getProperty("port")));
         cb.setSocketFactory(new UtilSSLSocketFactory().trustAllCertificates());
+
+		List<Integer> dcc_ports = new ArrayList<Integer>();
+		for(Integer dcc_port : Arrays.stream(this.getProperty("dcc_ports").split(",")).mapToInt(Integer::parseInt).toArray() ) {
+			dcc_ports.add(dcc_port);
+		}
+		cb.setDccPorts(dcc_ports);
+
+		try {
+			cb.setDccPublicAddress(InetAddress.getByName(this.getProperty("public_ip")));
+		} catch (UnknownHostException e) {
+			 this.getLogger().error("Unable to set DCC public address", e);
+		}
 
         // Set channel information
         String[] channels = this.getProperty("channels").split("\\s");

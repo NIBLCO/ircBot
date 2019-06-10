@@ -24,6 +24,9 @@ dcc_timeout = 120000
 verbose = false
 #changes nick if already used
 auto_nick_change = true
+# Referenced by Docker --add-host
+public_ip = public_dcc_ip
+dcc_ports = 46571,46572,46573
 
 ###BOT###
 # pass used to log in bot with dcc chat (admin)
