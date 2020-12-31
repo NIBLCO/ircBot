@@ -163,6 +163,12 @@ public class UpdatePackListFunctions {
 		for (AbstractDistroBot distroBot : _updatepackList.getBotsMap().values()) {
 			if( distroBot.isOnlne() && !distroBot.isInformative() ){
 				distroBot.getPackListFromBot();
+				try {
+					distroBot.setLastProcessed(new Timestamp(System.currentTimeMillis()));
+					_updatePackListDAO.updateBot(distroBot);
+				} catch (SQLException e) {
+					_myBot.getLogger().error("Failed updating bot information", e);
+				}
 			}
 		}
 	}
