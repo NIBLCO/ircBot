@@ -93,7 +93,7 @@ public class SearchDAO extends DataAccessObject {
 				notTerm = "JJ4fvieiwieEEEEQQ2?";
 			}
 			
-			String httpList = "http://nibl.co.uk/bots.php?search=" + searchTerm.trim().replaceAll(" ", "+");//prepare httpList for first output
+			String httpList = "http://nibl.co.uk/search?query=" + searchTerm.trim().replaceAll(" ", "+");//prepare httpList for first output
 			
 			//Create the searchTerm pattern for matching and sanatize input
 			Pattern searchTermPattern = Pattern.compile(".*" + searchTerm.trim().replaceAll("(\\{|\\}|\\+|\\\\|\\[|\\]|\\(|\\)|\\^|\\$|\\.|\\?|\\||\\<|\\>|\\-|\\&)","\\\\$1").replaceAll("[\\* _]", ".*") + ".*", Pattern.CASE_INSENSITIVE);
