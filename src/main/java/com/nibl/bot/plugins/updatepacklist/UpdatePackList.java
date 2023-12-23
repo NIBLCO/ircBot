@@ -175,7 +175,7 @@ public class UpdatePackList extends Service {
 				XdccDistroBot bot = (XdccDistroBot)UpdatePackListFunctions.getBot(nick);
 				if ( bot != null ) {
 					File file = new File(_myBot.getProperty("download_dir").replaceAll("---", Matcher.quoteReplacement("\\")) + nick.replaceAll("\\|", ""));
-					event.acceptAndTransfer(file); // blocking
+					event.accept(file); // blocking
 					bot.processPackListFromBot(file);
 				} else {
 					_myBot.getLogger().error(event.getUser().getNick() + " is sending an invalid file: " + filename);

@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 import org.pircbotx.Channel;
 import org.pircbotx.Configuration;
 import org.pircbotx.Configuration.Builder;
 import org.pircbotx.PircBotX;
 import org.pircbotx.UtilSSLSocketFactory;
+import org.pircbotx.delay.StaticDelay;
 import org.pircbotx.exception.IrcException;
 
 import com.nibl.bot.command.CommandFactory;
@@ -77,7 +77,7 @@ public class Bot {
         Builder cb = new Configuration.Builder();
         cb.addListener(new Listener(this));
         // Set bot information
-        cb.setMessageDelay(500);
+        cb.setMessageDelay(new StaticDelay(500));
         cb.setName(this.getProperty("bot_name"));
         cb.setAutoNickChange(this.getProperty("auto_nick_change").equals("true"));
         cb.setVersion("GomuGomu");

@@ -1,14 +1,17 @@
 package com.nibl.bot.plugins.updatepacklist;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.nibl.bot.Bot;
-import com.nibl.bot.util.HTTPGet;
+import com.nibl.bot.util.InputStreamConverter;
 
 public class JSDistroBot extends AbstractDistroBot {
 	
@@ -38,10 +41,13 @@ public class JSDistroBot extends AbstractDistroBot {
 		String url = this.getURL();		
 		try {
 			_myBot.getLogger().trace("Get buffered reader");
-			RandomAccessFile in = null;
-			// TODO add some check if buffered reader fails to populate
-			HTTPGet httpget = new HTTPGet(_myBot);
-			in = httpget.getURLData(url);
+	        URL urlopen = new URL( getURL() );
+			URLConnection urlConnection = urlopen.openConnection();
+			urlConnection.setConnectTimeout(10000);
+			urlConnection.setReadTimeout(10000);
+			urlConnection.setRequestProperty("User-Agent", "ooinuzaBot");
+			InputStream inputStream = urlConnection.getInputStream();
+			RandomAccessFile in = InputStreamConverter.toRandomAccessFile( inputStream );
 			_myBot.getLogger().trace("Finished Get buffered reader");
 			
 			LinkedList<Pack> output = _packParseFunctions.randomAccessFileToPacks(this, in);

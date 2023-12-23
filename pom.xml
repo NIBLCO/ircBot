@@ -51,15 +51,9 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.pircbotx</groupId>
+			<groupId>com.github.pircbotx</groupId>
 			<artifactId>pircbotx</artifactId>
-			<version>2.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>2.3.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
 		<dependency>
@@ -138,4 +132,10 @@
 			<version>0.9.11</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 </project>

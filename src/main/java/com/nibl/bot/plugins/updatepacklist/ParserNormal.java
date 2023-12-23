@@ -1,10 +1,12 @@
 package com.nibl.bot.plugins.updatepacklist;
 
+import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.nibl.bot.util.HTTPGet;
+import com.nibl.bot.util.InputStreamConverter;
 
 public class ParserNormal extends AbstractParser {
 	
@@ -56,8 +58,14 @@ public class ParserNormal extends AbstractParser {
 	
 	public static void main(String[] args) throws Exception{
 	    HttpDistroBot tempBot = new HttpDistroBot(null, 1, "tempBot", "https://gin.sadaharu.eu/Gin.txt", "HTTP", 1, null, null, null, 0, 0, "Jenga", 0);
-        HTTPGet httpget = new HTTPGet(null);
-        RandomAccessFile in = httpget.getURLData( tempBot.getURL() );
+	    
+        URL urlopen = new URL( tempBot.getURL() );
+		URLConnection urlConnection = urlopen.openConnection();
+		urlConnection.setConnectTimeout(10000);
+		urlConnection.setReadTimeout(10000);
+		urlConnection.setRequestProperty("User-Agent", "ooinuzaBot");
+		InputStream inputStream = urlConnection.getInputStream();
+		RandomAccessFile in = InputStreamConverter.toRandomAccessFile( inputStream );
         
         ParserNormal parser = new ParserNormal();
         List<Pack> packs = parser.parse(tempBot, in);
